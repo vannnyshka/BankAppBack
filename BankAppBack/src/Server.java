@@ -1,12 +1,8 @@
 import com.sun.net.httpserver.*;
-// import org.apache.commons.text.StringEscapeUtils;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-import java.sql.*;
-import java.util.concurrent.*;
+import controller.*;
 
-import endpoint.*;
+import java.net.InetSocketAddress;
+import java.util.concurrent.*;
 
 
 public class Server {
@@ -18,13 +14,13 @@ public class Server {
         HttpServer server = HttpServer.create();
         server.bind(new InetSocketAddress(28888), 0);
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor)Executors.newFixedThreadPool(1);
-        HttpContext context = server.createContext("/", new Endpoint1());
-        context = server.createContext("/endpoint2", new Endpoint2());
-        context = server.createContext("/endpoint3", new Endpoint3());
-        context = server.createContext("/balance", new Balance());
-        context = server.createContext("/balancewirthdraw", new BalanceWirthdraw());
-        context = server.createContext("/transactions", new Transactions());
-        context = server.createContext("/status", new Status());
+        HttpContext context = server.createContext("/", new Endpoint1Controller());
+        context = server.createContext("/endpoint2", new Endpoint2Controller());
+        context = server.createContext("/endpoint3", new Endpoint3Controller());
+        context = server.createContext("/balance", new BalanceController());
+        context = server.createContext("/balancewirthdraw", new BalanceWirthDrawController());
+        context = server.createContext("/transactions", new TransactionsConroller());
+        context = server.createContext("/status", new StatusController());
         server.setExecutor(threadPoolExecutor);
         server.start();
         System.out.println("Server started");
